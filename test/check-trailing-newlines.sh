@@ -1,7 +1,7 @@
 #!/bin/sh
 
 top_srcdir=${SOURCE_ROOT:-..}
-. ${top_srcdir}/tools/test/setup_env.sh
+. ${top_srcdir}/test/setup_env.sh
 
 ebegin "Checking trailing newlines in code"
 out=$(cd ${top_srcdir};
