@@ -1,7 +1,7 @@
 #!/bin/sh
 
 top_srcdir=${SOURCE_ROOT:-..}
-. ${top_srcdir}/test/setup_env.sh
+. ${top_srcdir}/tools/test/setup_env.sh
 
 ebegin "Checking for x* func usage"
 out=$(cd ${top_srcdir}; find src -name '*.[ch]' \

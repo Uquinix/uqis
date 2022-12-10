@@ -1,7 +1,7 @@
 #!/bin/sh
 
 top_srcdir=${SOURCE_ROOT:-..}
-. ${top_srcdir}/test/setup_env.sh
+. ${top_srcdir}/tools/test/setup_env.sh
 
 ebegin "Checking trailing whitespace in code"
 # XXX: Should we check man pages too ?
