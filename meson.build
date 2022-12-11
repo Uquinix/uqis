@@ -215,7 +215,7 @@ subdir('sh')
 subdir('src')
 subdir('meta/support')
 subdir('sysctl.d')
-subdir('tools/test')
+subdir('test')
 subdir('tools/zsh-completion')
 
 meson.add_install_script('tools/meson_runlevels.sh',
