@@ -1,6 +1,6 @@
-project('OpenRC', 'c',
-  version : '0.45',
-  license: 'BSD-2',
+project('UQIS', 'c',
+  version : '0.01',
+  license: 'UPSL',
   default_options : [
     'c_std=c99',
     'prefix=/usr',
