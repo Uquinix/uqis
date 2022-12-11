@@ -23,7 +23,7 @@ required_dirs=$openvpn_dir
 required_files=$openvpn_config
 
 # If we're an openvpn client, then supply a nice default config
-# You can find sample up/down scripts in the OpenRC support/openvpn dir
+# You can find sample up/down scripts in the OpenRC meta/support/openvpn dir
 if yesno $openvpn_client; then
 	: ${openvpn_up:=${openvpn_dir}/up.sh}
 	: ${openvpn_down:=${openvpn_dir}/down.sh}
