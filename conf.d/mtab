@@ -7,7 +7,7 @@
 # of any need to manipulate /etc/mtab as a separate file from
 # /proc/self/mounts.
 # If you have a technical reason we should keep this support, please
-# open an issue at https://github.com/openrc/openrc/issues and let us
+# open an issue at https://github.com/Uquinix/uqis/issues and let us
 # know about your situation.
 # This setting controls whether /etc/mtab is a file or symbolic link.
 # mtab_is_file=no

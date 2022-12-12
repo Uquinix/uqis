@@ -1,11 +1,9 @@
 /*
  * Copyright (c) 2007-2015 The OpenRC Authors.
- * See the Authors file at the top-level directory of this distribution and
- * https://github.com/OpenRC/openrc/blob/HEAD/AUTHORS
  *
- * This file is part of OpenRC. It is subject to the license terms in
+ * This file is part of the UQIS project. It is subject to the license terms in
  * the LICENSE file found in the top-level directory of this
- * distribution and at https://github.com/OpenRC/openrc/blob/HEAD/LICENSE
+ * distribution and at https://github.com/Uquinix/uqis/blob/main/LICENSE
  * This file may not be copied, modified, propagated, or distributed
  *    except according to the terms contained in the LICENSE file.
  */
@@ -36,7 +34,7 @@ int main(int argc, char **argv)
 	bool ok = false;
 	char *svcname = getenv("RC_SVCNAME");
 	char *service = NULL;
-	char *openrc_pid;
+	char *uqis_pid;
 	/* char *mtime; */
 	pid_t pid;
 	RC_SERVICE bit;
@@ -58,17 +56,17 @@ int main(int argc, char **argv)
 		eerrorx("%s: unknown applet", applet);
 
 	/* If we're marking ourselves then we need to inform our parent
-	   openrc-run process so they do not mark us based on our exit code */
+	   uqis-run process so they do not mark us based on our exit code */
 	/*
 	 * FIXME: svcname and service are almost always equal except called from a
 	 * shell with just argv[1] - So that doesn't seem to do what Roy initially
 	 * expected.
 	 * See 20120424041423.GA23657@odin.qasl.de (Tue, 24 Apr 2012 06:14:23 +0200,
-	 * openrc@gentoo.org).
+	 * uqis@gentoo.org).
 	 */
 	if (ok && svcname && strcmp(svcname, service) == 0) {
-		openrc_pid = getenv("RC_OPENRC_PID");
-		if (openrc_pid && sscanf(openrc_pid, "%d", &pid) == 1)
+		uqis_pid = getenv("RC_UQIS_PID");
+		if (uqis_pid && sscanf(uqis_pid, "%d", &pid) == 1)
 			if (kill(pid, SIGHUP) != 0)
 				eerror("%s: failed to signal parent %d: %s",
 				    applet, pid, strerror(errno));
@@ -77,10 +75,10 @@ int main(int argc, char **argv)
 		   in control as well */
 		/*
 		l = strlen(RC_SVCDIR "/exclusive") + strlen(svcname) +
-		    strlen(openrc_pid) + 4;
+		    strlen(uqis_pid) + 4;
 		mtime = xmalloc(l);
 		snprintf(mtime, l, RC_SVCDIR "/exclusive/%s.%s",
-		    svcname, openrc_pid);
+		    svcname, uqis_pid);
 		if (exists(mtime) && unlink(mtime) != 0)
 			eerror("%s: unlink: %s", applet, strerror(errno));
 		free(mtime);

@@ -1,4 +1,4 @@
-#!@SBINDIR@/openrc-run
+#!@SBINDIR@/uqis-run
 # Copyright 1992-2012 FreeBSD Project
 # Released under the 2-clause BSD license
 

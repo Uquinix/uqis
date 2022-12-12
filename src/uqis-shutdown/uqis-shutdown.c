@@ -1,6 +1,6 @@
 /*
- * openrc-shutdown.c
- * If you are using OpenRC's provided init, this will shut down or
+ * uqis-shutdown.c
+ * If you are using UQIS's provided init, this will shut down or
  * reboot your system.
  *
  * This is based on code written by James Hammons <jlhamm@acm.org>, so
@@ -9,14 +9,14 @@
 
 /*
  * Copyright 2017 The OpenRC Authors.
- * See the Authors file at the top-level directory of this distribution and
- * https://github.com/OpenRC/openrc/blob/HEAD/AUTHORS
+
  *
- * This file is part of OpenRC. It is subject to the license terms in
+ * This file is part of the UQIS project. It is subject to the license terms in
  * the LICENSE file found in the top-level directory of this
- * distribution and at https://github.com/OpenRC/openrc/blob/HEAD/LICENSE
+ * distribution and at https://github.com/Uquinix/uqis/blob/main/LICENSE
  * This file may not be copied, modified, propagated, or distributed
  *    except according to the terms contained in the LICENSE file.
+
  */
 
 #include <getopt.h>
@@ -69,19 +69,19 @@ const char * const longopts_help[] = {
 	longopts_help_COMMON
 };
 const char *usagestring = "" \
-						   "Usage: openrc-shutdown -c | --cancel\n" \
-						   "   or: openrc-shutdown -R | --reexec\n" \
-						   "   or: openrc-shutdown -w | --write-only\n" \
-						   "   or: openrc-shutdown -H | --halt time\n" \
-						   "   or: openrc-shutdown -K | --kexec time\n" \
-						   "   or: openrc-shutdown -p | --poweroff time\n" \
-						   "   or: openrc-shutdown -r | --reboot time\n" \
-						   "   or: openrc-shutdown -s | --single time";
+						   "Usage: uqis-shutdown -c | --cancel\n" \
+						   "   or: uqis-shutdown -R | --reexec\n" \
+						   "   or: uqis-shutdown -w | --write-only\n" \
+						   "   or: uqis-shutdown -H | --halt time\n" \
+						   "   or: uqis-shutdown -K | --kexec time\n" \
+						   "   or: uqis-shutdown -p | --poweroff time\n" \
+						   "   or: uqis-shutdown -r | --reboot time\n" \
+						   "   or: uqis-shutdown -s | --single time";
 const char *exclusive = "Select one of "
 	"--cancel, --halt, --kexec, --poweroff, --reexec, --reboot, --single or \n"
 	"--write-only";
 const char *nologin_file = RC_SYSCONFDIR"/nologin";
-const char *shutdown_pid = "/run/openrc-shutdown.pid";
+const char *shutdown_pid = "/run/uqis-shutdown.pid";
 
 static bool do_cancel = false;
 static bool do_dryrun = false;

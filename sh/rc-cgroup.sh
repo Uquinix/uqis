@@ -1,10 +1,8 @@
 # Copyright (c) 2012-2015 The OpenRC Authors.
-# See the Authors file at the top-level directory of this distribution and
-# https://github.com/OpenRC/openrc/blob/HEAD/AUTHORS
-#
-# This file is part of OpenRC. It is subject to the license terms in
+
+# This file is part of the UQIS project. It is subject to the license terms in
 # the LICENSE file found in the top-level directory of this
-# distribution and at https://github.com/OpenRC/openrc/blob/HEAD/LICENSE
+# distribution and at https://github.com/Uquinix/uqis/blob/HEAD/LICENSE
 # This file may not be copied, modified, propagated, or distributed
 #    except according to the terms contained in the LICENSE file.
 
@@ -28,7 +26,6 @@ cgroup_find_path()
 # variable.
 # It is done this way to avoid subshells so we don't have to worry about
 # locating the pid of the subshell in the cgroup.
-# https://github.com/openrc/openrc/issues/396
 cgroup_get_pids()
 {
 	local cgroup_procs p
@@ -37,7 +34,7 @@ cgroup_get_pids()
 	if [ -n "${cgroup_procs}" ]; then
 		cgroup_procs="${cgroup_procs}/${RC_SVCNAME}/cgroup.procs"
 	else
-		cgroup_procs="/sys/fs/cgroup/openrc/${RC_SVCNAME}/tasks"
+		cgroup_procs="/sys/fs/cgroup/uqis/${RC_SVCNAME}/tasks"
 	fi
 	[ -f "${cgroup_procs}" ] || return 0
 	while read -r p; do
@@ -51,7 +48,7 @@ cgroup_running()
 {
 	[ -d "/sys/fs/cgroup/unified/${RC_SVCNAME}" ] ||
 			[ -d "/sys/fs/cgroup/${RC_SVCNAME}" ] ||
-			[ -d "/sys/fs/cgroup/openrc/${RC_SVCNAME}" ]
+			[ -d "/sys/fs/cgroup/uqis/${RC_SVCNAME}" ]
 }
 
 cgroup_set_values()
@@ -61,7 +58,7 @@ cgroup_set_values()
 	local controller h
 	controller="$1"
 	h=$(cgroup_find_path "$1")
-	cgroup="/sys/fs/cgroup/${1}${h}openrc_${RC_SVCNAME}"
+	cgroup="/sys/fs/cgroup/${1}${h}uqis_${RC_SVCNAME}"
 	[ -d "$cgroup" ] || mkdir -p "$cgroup"
 
 	set -- $2
@@ -108,9 +105,9 @@ cgroup_add_service()
 		[ -w "${d}"/tasks ] && printf "%d" 0 > "${d}"/tasks
 	done
 
-	openrc_cgroup=/sys/fs/cgroup/openrc
-	if [ -d "$openrc_cgroup" ]; then
-		cgroup="$openrc_cgroup/$RC_SVCNAME"
+	uqis_cgroup=/sys/fs/cgroup/uqis
+	if [ -d "$uqis_cgroup" ]; then
+		cgroup="$uqis_cgroup/$RC_SVCNAME"
 		mkdir -p "$cgroup"
 		[ -w "$cgroup/tasks" ] && printf "%d" 0 > "$cgroup/tasks"
 	fi

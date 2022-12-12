@@ -42,5 +42,5 @@ if [ -z "${shutdown_arg}" ]; then
 	shutdown_arg=--single
 fi
 
-printf "%s %s\n" "@SBINDIR@/openrc-shutdown ${shutdown_arg}" "$@"
-exec @SBINDIR@/openrc-shutdown ${shutdown_arg} "$@"
+printf "%s %s\n" "@SBINDIR@/uqis-shutdown ${shutdown_arg}" "$@"
+exec @SBINDIR@/uqis-shutdown ${shutdown_arg} "$@"

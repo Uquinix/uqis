@@ -44,7 +44,7 @@ do_test()
 	r2=$?
 
 	[ -n "${VERBOSE}" ] &&
-		printf "reference = %s  |  OpenRC = %s\n" "$r1" "$r2"
+		printf "reference = %s  |  UQIS = %s\n" "$r1" "$r2"
 	[ $r1 = $r2 ]
 }
 

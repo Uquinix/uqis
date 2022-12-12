@@ -5,26 +5,26 @@
 id:3:initdefault:
 
 # System initialization, mount local filesystems, etc.
-si::sysinit:/sbin/openrc sysinit
+si::sysinit:/sbin/uqis sysinit
 
 # Further system initialization, brings up the boot runlevel.
-rc::bootwait:/sbin/openrc boot
+rc::bootwait:/sbin/uqis boot
 
 l0u:0:wait:/sbin/telinit u
-l0:0:wait:/sbin/openrc shutdown
+l0:0:wait:/sbin/uqis shutdown
 l0s:0:wait:/sbin/halt.sh
-l1:S1:wait:/sbin/openrc single
-l2:2:wait:/sbin/openrc nonetwork
-l3:3:wait:/sbin/openrc default
-l4:4:wait:/sbin/openrc default
-l5:5:wait:/sbin/openrc default
+l1:S1:wait:/sbin/uqis single
+l2:2:wait:/sbin/uqis nonetwork
+l3:3:wait:/sbin/uqis default
+l4:4:wait:/sbin/uqis default
+l5:5:wait:/sbin/uqis default
 l6u:6:wait:/sbin/telinit u
-l6:6:wait:/sbin/openrc reboot
+l6:6:wait:/sbin/uqis reboot
 l6r:6:wait:/sbin/reboot -d
 #z6:6:respawn:/sbin/sulogin
 
 # new-style single-user
-su0:S:wait:/sbin/openrc single
+su0:S:wait:/sbin/uqis single
 su1:S:wait:/sbin/sulogin
 
 # TERMINALS

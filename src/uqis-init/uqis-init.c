@@ -1,6 +1,6 @@
 /*
- * openrc-init.c
- * This is the init process (pid 1) for OpenRC.
+ * uqis-init.c
+ * This is the init process (pid 1) for UQIS.
  *
  * This is based on code written by James Hammons <jlhamm@acm.org>, so
  * I would like to publically thank him for his work.
@@ -8,14 +8,14 @@
 
 /*
  * Copyright (c) 2017 The OpenRC Authors.
- * See the Authors file at the top-level directory of this distribution and
- * https://github.com/OpenRC/openrc/blob/HEAD/AUTHORS
+
  *
- * This file is part of OpenRC. It is subject to the license terms in
+ * This file is part of the UQIS project. It is subject to the license terms in
  * the LICENSE file found in the top-level directory of this
- * distribution and at https://github.com/OpenRC/openrc/blob/HEAD/LICENSE
+ * distribution and at https://github.com/Uquinix/uqis/blob/main/LICENSE
  * This file may not be copied, modified, propagated, or distributed
  *    except according to the terms contained in the LICENSE file.
+
  */
 
 #include <errno.h>
@@ -45,7 +45,7 @@
 static const char *path_default = "/sbin:/usr/sbin:/bin:/usr/bin";
 static const char *rc_default_runlevel = "default";
 
-static void do_openrc(const char *runlevel)
+static void do_uqis(const char *runlevel)
 {
 	pid_t pid;
 	sigset_t all_signals;
@@ -65,7 +65,7 @@ static void do_openrc(const char *runlevel)
 			/* unblock all signals */
 			sigprocmask(SIG_UNBLOCK, &all_signals, NULL);
 			printf("Starting %s runlevel\n", runlevel);
-			execlp("openrc", "openrc", runlevel, NULL);
+			execlp("uqis", "uqis", runlevel, NULL);
 			perror("exec");
 			exit(1);
 			break;
@@ -82,8 +82,8 @@ static void do_openrc(const char *runlevel)
 static void init(const char *default_runlevel)
 {
 	const char *runlevel = NULL;
-	do_openrc("sysinit");
-	do_openrc("boot");
+	do_uqis("sysinit");
+	do_uqis("boot");
 	if (default_runlevel)
 		runlevel = default_runlevel;
 	else
@@ -94,7 +94,7 @@ static void init(const char *default_runlevel)
 		printf("%s is an invalid runlevel\n", runlevel);
 		runlevel = rc_default_runlevel;
 	}
-	do_openrc(runlevel);
+	do_uqis(runlevel);
 	log_wtmp("reboot", "~~", 0, RUN_LVL, "~~");
 }
 
@@ -108,7 +108,7 @@ static void handle_shutdown(const char *runlevel, int cmd)
 {
 	struct timespec ts;
 
-	do_openrc(runlevel);
+	do_uqis(runlevel);
 	printf("Sending the final term signal\n");
 	kill(-1, SIGTERM);
 	ts.tv_sec = 3;
@@ -181,7 +181,7 @@ static void open_shell(void)
 
 static void handle_single(void)
 {
-	do_openrc("single");
+	do_uqis("single");
 }
 
 static void reap_zombies(void)
@@ -261,7 +261,7 @@ int main(int argc, char **argv)
 	}
 #endif
 
-	printf("OpenRC init version %s starting\n", VERSION);
+	printf("UQIS init version %s starting\n", VERSION);
 
 	if (argc > 1)
 		default_runlevel = argv[1];

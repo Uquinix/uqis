@@ -1,4 +1,4 @@
-executable('openrc',
+executable('uqis',
   ['rc.c', 'rc-logger.c', misc_c, plugin_c, usage_c, version_h],
   c_args : cc_branding_flags,
   link_with: [libeinfo, librc],

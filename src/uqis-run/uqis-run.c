@@ -1,16 +1,14 @@
 /*
- * openrc-run.c
+ * uqis-run.c
  * Handle launching of init scripts.
  */
 
 /*
  * Copyright (c) 2007-2015 The OpenRC Authors.
- * See the Authors file at the top-level directory of this distribution and
- * https://github.com/OpenRC/openrc/blob/HEAD/AUTHORS
  *
- * This file is part of OpenRC. It is subject to the license terms in
+ * This file is part of the UQIS project. It is subject to the license terms in
  * the LICENSE file found in the top-level directory of this
- * distribution and at https://github.com/OpenRC/openrc/blob/HEAD/LICENSE
+ * distribution and at https://github.com/Uquinix/uqis/blob/main/LICENSE
  * This file may not be copied, modified, propagated, or distributed
  *    except according to the terms contained in the LICENSE file.
  */
@@ -273,7 +271,7 @@ cleanup(void)
 
 /* Buffer and lock all output messages so that we get readable content */
 /* FIXME: Use a dynamic lock file that contains the tty/pts as well.
- * For example openrc-pts8.lock or openrc-tty1.lock.
+ * For example uqis-pts8.lock or uqis-tty1.lock.
  * Using a static lock file makes no sense, esp. in multi-user environments.
  * Why don't we use (f)printf, as it is thread-safe through POSIX already?
  * Bug: 360013
@@ -390,36 +388,36 @@ svc_exec(const char *arg1, const char *arg2)
 			dup2(slave_tty, STDERR_FILENO);
 		}
 
-		if (exists(RC_SVCDIR "/openrc-run.sh")) {
+		if (exists(RC_SVCDIR "/uqis-run.sh")) {
 			if (arg2)
 				einfov("Executing: %s %s %s %s %s",
-					RC_SVCDIR "/openrc-run.sh", RC_SVCDIR "/openrc-run.sh",
+					RC_SVCDIR "/uqis-run.sh", RC_SVCDIR "/uqis-run.sh",
 					service, arg1, arg2);
 			else
 				einfov("Executing: %s %s %s %s",
-					RC_SVCDIR "/openrc-run.sh", RC_SVCDIR "/openrc-run.sh",
+					RC_SVCDIR "/uqis-run.sh", RC_SVCDIR "/uqis-run.sh",
 					service, arg1);
-			execl(RC_SVCDIR "/openrc-run.sh",
-			    RC_SVCDIR "/openrc-run.sh",
+			execl(RC_SVCDIR "/uqis-run.sh",
+			    RC_SVCDIR "/uqis-run.sh",
 			    service, arg1, arg2, (char *) NULL);
-			eerror("%s: exec `" RC_SVCDIR "/openrc-run.sh': %s",
+			eerror("%s: exec `" RC_SVCDIR "/uqis-run.sh': %s",
 			    service, strerror(errno));
 			_exit(EXIT_FAILURE);
 		} else {
 			if (arg2)
 				einfov("Executing: %s %s %s %s %s",
-					RC_LIBEXECDIR "/sh/openrc-run.sh",
-					RC_LIBEXECDIR "/sh/openrc-run.sh",
+					RC_LIBEXECDIR "/sh/uqis-run.sh",
+					RC_LIBEXECDIR "/sh/uqis-run.sh",
 			    	service, arg1, arg2);
 			else
 				einfov("Executing: %s %s %s %s",
-					RC_LIBEXECDIR "/sh/openrc-run.sh",
-					RC_LIBEXECDIR "/sh/openrc-run.sh",
+					RC_LIBEXECDIR "/sh/uqis-run.sh",
+					RC_LIBEXECDIR "/sh/uqis-run.sh",
 			    	service, arg1);
-			execl(RC_LIBEXECDIR "/sh/openrc-run.sh",
-			    RC_LIBEXECDIR "/sh/openrc-run.sh",
+			execl(RC_LIBEXECDIR "/sh/uqis-run.sh",
+			    RC_LIBEXECDIR "/sh/uqis-run.sh",
 			    service, arg1, arg2, (char *) NULL);
-			eerror("%s: exec `" RC_LIBEXECDIR "/sh/openrc-run.sh': %s",
+			eerror("%s: exec `" RC_LIBEXECDIR "/sh/uqis-run.sh': %s",
 			    service, strerror(errno));
 			_exit(EXIT_FAILURE);
 		}
@@ -1125,7 +1123,7 @@ int main(int argc, char **argv)
 
 	/* Show help if insufficient args */
 	if (argc < 2 || !exists(argv[1])) {
-		fprintf(stderr, "openrc-run should not be run directly\n");
+		fprintf(stderr, "uqis-run should not be run directly\n");
 		exit(EXIT_FAILURE);
 	}
 
@@ -1134,7 +1132,7 @@ int main(int argc, char **argv)
 		runscript = true;
 
 	if (stat(argv[1], &stbuf) != 0) {
-		fprintf(stderr, "openrc-run `%s': %s\n",
+		fprintf(stderr, "uqis-run `%s': %s\n",
 		    argv[1], strerror(errno));
 		exit(EXIT_FAILURE);
 	}
@@ -1199,7 +1197,7 @@ int main(int argc, char **argv)
 	   subshells the init script may create so that our mark_service_*
 	   functions can always instruct us of this change */
 	xasprintf(&pidstr, "%d", (int) getpid());
-	setenv("RC_OPENRC_PID", pidstr, 1);
+	setenv("RC_UQIS_PID", pidstr, 1);
 	/*
 	 * RC_RUNSCRIPT_PID is deprecated, but we will keep it for a while
 	 * for safety.
@@ -1306,7 +1304,7 @@ int main(int argc, char **argv)
 	rc_stringlist_add(applet_list, applet);
 
 	if (runscript)
-		ewarn("%s uses runscript, please convert to openrc-run.", service);
+		ewarn("%s uses runscript, please convert to uqis-run.", service);
 
 	/* Now run each option */
 	retval = EXIT_SUCCESS;

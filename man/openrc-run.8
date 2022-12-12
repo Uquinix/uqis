@@ -1,18 +1,15 @@
 .\" Copyright (c) 2007-2015 The OpenRC Authors.
-.\" See the Authors file at the top-level directory of this distribution and
-.\" https://github.com/OpenRC/openrc/blob/HEAD/AUTHORS
-.\"
-.\" This file is part of OpenRC. It is subject to the license terms in
+.\" This file is part of the UQIS project. It is subject to the license terms in
 .\" the LICENSE file found in the top-level directory of this
-.\" distribution and at https://github.com/OpenRC/openrc/blob/HEAD/LICENSE
+.\" distribution and at https://github.com/Uquinix/uqis/blob/HEAD/LICENSE
 .\" This file may not be copied, modified, propagated, or distributed
 .\"    except according to the terms contained in the LICENSE file.
 .\"
 .Dd November 30, 2017
-.Dt openrc-run 8 SMM
-.Os OpenRC
+.Dt uqis-run 8 SMM
+.Os UQIS
 .Sh NAME
-.Nm openrc-run
+.Nm uqis-run
 .Nd a means of hooking shell commands into a service
 .Sh SYNOPSIS
 .Nm
@@ -71,7 +68,7 @@ Only run the command if the service has been started.
 Only run the command if the service has been stopped.
 .It Fl q , -quiet
 Turns off all informational output the service generates.
-Output from any non OpenRC commands is not affected.
+Output from any non UQIS commands is not affected.
 .It Fl v , -verbose
 Turns on any extra informational output the service generates.
 .It Fl Z , -dry-run
@@ -98,7 +95,7 @@ String describing the extra command.
 Supervisor to use to monitor this daemon. If this is unset or invalid,
 start-stop-daemon will be used.
 Currently, we support s6 from skarnet software, and supervise-daemon
-which is a light-weight supervisor internal to OpenRC.
+which is a light-weight supervisor internal to UQIS.
 To use s6, set
 supervisor=s6.
 or set
@@ -546,7 +543,7 @@ Name of the service.
 .It Va RC_SERVICE
 Full path to the service.
 .It Va RC_RUNLEVEL
-Current runlevel that OpenRC is in. Note that, in OpenRC, the reboot
+Current runlevel that UQIS is in. Note that, in UQIS, the reboot
 runlevel is mapped to the shutdown runlevel. This was done because most
 services do not need to know if a system is shutting down or rebooting.
 If you are writing a service that does need to know this, see the
@@ -574,7 +571,7 @@ service script behave differently when restart is being executed.
 This variable contains YES if the system is going into single user mode
 or shutting down.
 .It Va RC_LIBEXECDIR
-The value of libexecdir which OpenRC was configured with during build
+The value of libexecdir which UQIS was configured with during build
 time.
 .It Va RC_NO_UMOUNTS
 This variable is used by plugins to contain a list of directories which
@@ -616,7 +613,7 @@ rc_provide_tap1="!net"
 rc_net_tap1_provide="!net"
 
 # It's also possible to negate keywords. This is mainly useful for prefix
-# users testing OpenRC.
+# users testing UQIS.
 rc_keyword="!-prefix"
 # This can also be used to block a script from running in all
 # containers except one or two
@@ -626,7 +623,7 @@ rc_keyword="!-containers !-docker"
 .Pp
 An example service script for foo.
 .Bd -literal -offset indent
-#!/sbin/openrc-run
+#!/sbin/uqis-run
 command=/usr/bin/foo
 command_args="${foo_args} --bar"
 pidfile=/var/run/foo.pid
@@ -751,7 +748,7 @@ Instead we return 1 to be compliant with Gentoo baselayout.
 Users are encouraged to use the is_newer_than function which returns correctly.
 .Sh SEE ALSO
 .Xr einfo 3 ,
-.Xr openrc 8 ,
+.Xr uqis 8 ,
 .Xr rc-status 8 ,
 .Xr rc-update 8 ,
 .Xr rc_plugin_hook 3 ,

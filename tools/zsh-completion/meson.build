@@ -1,6 +1,6 @@
 if get_option('zsh-completions')
 zsh_completions = [
-  '_openrc',
+  '_uqis',
   '_rc-service',
   '_rc-status',
   '_rc-update',

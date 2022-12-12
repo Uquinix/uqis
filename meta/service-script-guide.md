@@ -1,8 +1,8 @@
-OpenRC Service Script Writing Guide
+UQIS Service Script Writing Guide
 ===================================
 
 This document is aimed at developers or packagers who
-write OpenRC service scripts, either for their own projects, or for
+write UQIS service scripts, either for their own projects, or for
 the packages they maintain. It contains advice, suggestions, tips,
 tricks, hints, and counsel; cautions, warnings, heads-ups,
 admonitions, proscriptions, enjoinders, and reprimands.
@@ -16,15 +16,15 @@ process.
 
 # Syntax of Service Scripts
 
-Service scripts are shell scripts. OpenRC aims at using only the standardized 
+Service scripts are shell scripts. UQIS aims at using only the standardized 
 POSIX sh subset for portability reasons. The default interpreter (build-time 
 toggle) is `/bin/sh`, so using for example mksh is not a problem.
 
-OpenRC has been tested with busybox sh, ash, dash, bash, mksh, zsh and possibly 
+UQIS has been tested with busybox sh, ash, dash, bash, mksh, zsh and possibly 
 others. Using busybox sh has been difficult as it replaces commands with 
 builtins that don't offer the expected features.
 
-The interpreter for service scripts is `#!/sbin/openrc-run`.
+The interpreter for service scripts is `#!/sbin/uqis-run`.
 Not using this interpreter will break the use of dependencies and is not 
 supported. (iow: if you insist on using `#!/bin/sh` you're on your own)
 
@@ -52,7 +52,7 @@ stopped. This can be used for implementing graceful reload and similar
 behaviour.
 
 Adding a restart function will not work, this is a design decision within 
-OpenRC. Since there may be dependencies involved (e.g. network -> apache) a 
+UQIS. Since there may be dependencies involved (e.g. network -> apache) a 
 restart function is in general not going to work. 
 restart is internally mapped to `stop()` + `start()` (plus handling dependencies).
 If a service needs to behave differently when it is being restarted vs
@@ -111,7 +111,7 @@ stop()
 status()
 ```
 
-There are default implementations in `lib/rc/sh/openrc-run.sh` - this allows very 
+There are default implementations in `lib/rc/sh/uqis-run.sh` - this allows very 
 compact service scripts. These functions can be overridden per service script as 
 needed.
 
@@ -128,16 +128,16 @@ Thus the 'smallest' service scripts can be half a dozen lines long
 
 ## Don't write your own start/stop functions
 
-OpenRC is capable of stopping and starting most daemons based on the
+UQIS is capable of stopping and starting most daemons based on the
 information that you give it. For a well-behaved daemon that
 backgrounds itself and writes its own PID file by default, the
-following OpenRC variables are likely all that you'll need:
+following UQIS variables are likely all that you'll need:
 
   * command
   * command_args
   * pidfile
 
-Given those three pieces of information, OpenRC will be able to start
+Given those three pieces of information, UQIS will be able to start
 and stop the daemon on its own. The following is taken from an
 [OpenNTPD](http://www.openntpd.org/) service script:
 
@@ -167,7 +167,7 @@ pidfile="/run/${RC_SVCNAME}.pid"
 ```
 
 Since NRPE runs as *root* by default, it needs no special permissions
-to write to `/run/nrpe.pid`. OpenRC takes care of starting and
+to write to `/run/nrpe.pid`. UQIS takes care of starting and
 stopping the daemon with the appropriate arguments, even passing the
 `--daemon` flag during startup to force NRPE into the background (NRPE
 knows how to write its own PID file).
@@ -208,7 +208,7 @@ create a PID file, then your only option is to use
 
   * procname
 
-With `procname`, OpenRC will try to find the running daemon by
+With `procname`, UQIS will try to find the running daemon by
 matching the name of its process. That's not so reliable, but daemons
 shouldn't background themselves without creating a PID file in the
 first place. The next example is part of the [CA NetConsole
@@ -366,7 +366,7 @@ pidfile="@piddir@/${RC_SVCNAME}.pid"
 ```
 
 A decent example of this is the [Nagios core service
-script](https://github.com/NagiosEnterprises/nagioscore/blob/HEAD/openrc-init.in),
+script](https://github.com/NagiosEnterprises/nagioscore/blob/HEAD/uqis-init.in),
 where the full path to the PID file is specified at build-time.
 
 ## Don't let the user control the PID file location
@@ -389,7 +389,7 @@ location through a conf.d variable, for a few reasons:
 
   4. Nobody cares where the PID file is located, anyway.
 
-Since OpenRC service names must be unique, a value of
+Since UQIS service names must be unique, a value of
 
 ```sh
 pidfile="/var/run/${RC_SVCNAME}.pid"
@@ -399,8 +399,8 @@ guarantees that your PID file has a unique name.
 
 ## Upstream your service scripts (for packagers)
 
-The ideal place for an OpenRC service script is **upstream**. Much like
-systemd services, a well-crafted OpenRC service script should be
+The ideal place for an UQIS service script is **upstream**. Much like
+systemd services, a well-crafted UQIS service script should be
 distribution-agnostic, and the best place for it is upstream. Why? For
 two reasons. First, having it upstream means that there's a single
 authoritative source for improvements. Second, a few paths in every
@@ -464,7 +464,7 @@ off the WAN interface for a second.
 Network servers are generally easier to handle than their client
 counterparts. Most server daemons listen on `0.0.0.0` (all addresses)
 by default, and are therefore satisfied to have the loopback interface
-present and operational. OpenRC ships with the loopback service in the
+present and operational. UQIS ships with the loopback service in the
 *boot* runlevel, and therefore most server daemons require no further
 network dependencies.
 

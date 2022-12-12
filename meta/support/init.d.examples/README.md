@@ -1,4 +1,4 @@
-Example OpenRC Service Scripts
+Example UQIS Service Scripts
 ##############################
 
 The service scripts in this directory are meant as examples only.

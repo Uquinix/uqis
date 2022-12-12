@@ -5,12 +5,10 @@
 
 /*
  * Copyright (c) 2007-2015 The OpenRC Authors.
- * See the Authors file at the top-level directory of this distribution and
- * https://github.com/OpenRC/openrc/blob/HEAD/AUTHORS
  *
- * This file is part of OpenRC. It is subject to the license terms in
+ * This file is part of the UQIS project. It is subject to the license terms in
  * the LICENSE file found in the top-level directory of this
- * distribution and at https://github.com/OpenRC/openrc/blob/HEAD/LICENSE
+ * distribution and at https://github.com/Uquinix/uqis/blob/main/LICENSE
  * This file may not be copied, modified, propagated, or distributed
  *    except according to the terms contained in the LICENSE file.
  */
@@ -127,7 +125,7 @@ _unused static bool existss(const char *pathname)
 }
 
 /*
- * This is an OpenRC specific version of the asprintf() function.
+ * This is an UQIS specific version of the asprintf() function.
  * We do this to avoid defining the _GNU_SOURCE feature test macro on
  * glibc systems and to insure that we have a consistent function across
  * platforms. This also allows us to call our xmalloc and xrealloc

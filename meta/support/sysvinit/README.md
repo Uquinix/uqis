@@ -1,4 +1,4 @@
-OpenRC Sysvinit Support
+UQIS Sysvinit Support
 ========================
 
 Here's a sample inittab for use with sysvinit for Linux based systems.

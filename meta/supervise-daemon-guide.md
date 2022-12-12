@@ -1,7 +1,7 @@
 Using supervise-daemon
 ======================
 
-Beginning with OpenRC-0.21 we have our own daemon supervisor,
+Beginning with UQIS-0.21 we have our own daemon supervisor,
 supervise-daemon., which can start a daemon and restart it if it
 terminates unexpectedly.
 
@@ -9,7 +9,7 @@ The following is a brief guide on using this capability.
 
 * Use Default start, stop and status functions
   If you write your own start, stop and status functions in your service
-  script, none of this will work. You must allow OpenRC to use the default
+  script, none of this will work. You must allow UQIS to use the default
   functions.
 
 * Daemons must not fork
@@ -54,7 +54,7 @@ supervisor=supervise-daemon
 ```
 
 Several other variables affect the way services behave under
-supervise-daemon. They are documented on the  openrc-run man page, but I
+supervise-daemon. They are documented on the  uqis-run man page, but I
 will list them here for convenience:
 
 ``` sh

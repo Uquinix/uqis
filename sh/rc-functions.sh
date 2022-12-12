@@ -90,7 +90,7 @@ need_if_exists()
 	done
 }
 
-# Called from openrc-run.sh or gendepends.sh
+# Called from uqis-run.sh or gendepends.sh
 _get_containers() {
 	local c
 	case "${RC_UNAME}" in

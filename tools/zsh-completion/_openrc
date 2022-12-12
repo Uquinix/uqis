@@ -1,4 +1,4 @@
-#compdef openrc
+#compdef uqis
 
 if (( CURRENT == 2 )); then
 	_values "runlevels" $(rc-status --list)

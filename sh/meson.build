@@ -27,7 +27,7 @@ sh_config = [
 
 scripts_config = [
   'gendepends.sh.in',
-  'openrc-run.sh.in',
+  'uqis-run.sh.in',
   ]
 
 if os == 'Linux'

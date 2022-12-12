@@ -30,7 +30,7 @@ Who:
 
 When: 1.0
 
-Why: Deprecated in favor of openrc-run and openrc due to naming
+Why: Deprecated in favor of uqis-run and uqis due to naming
 	 conflicts with other software.
 
 Who:

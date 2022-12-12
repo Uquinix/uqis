@@ -10,12 +10,10 @@
 
 /*
  * Copyright (c) 2007-2015 The OpenRC Authors.
- * See the Authors file at the top-level directory of this distribution and
- * https://github.com/OpenRC/openrc/blob/HEAD/AUTHORS
  *
- * This file is part of OpenRC. It is subject to the license terms in
+ * This file is part of the UQIS project. It is subject to the license terms in
  * the LICENSE file found in the top-level directory of this
- * distribution and at https://github.com/OpenRC/openrc/blob/HEAD/LICENSE
+ * distribution and at https://github.com/Uquinix/uqis/blob/main/LICENSE
  * This file may not be copied, modified, propagated, or distributed
  *    except according to the terms contained in the LICENSE file.
  */
@@ -70,7 +68,7 @@ const char * const longopts_help[] = {
 	longopts_help_COMMON
 };
 const char *usagestring = ""					\
-    "Usage: openrc [options] [<runlevel>]";
+    "Usage: uqis [options] [<runlevel>]";
 
 #define INITSH                  RC_LIBEXECDIR "/sh/init.sh"
 #define INITEARLYSH             RC_LIBEXECDIR "/sh/init-early.sh"
@@ -125,7 +123,7 @@ cleanup(void)
 	RC_PID *p2;
 
 	if (!rc_in_logger && !rc_in_plugin &&
-	    applet && (strcmp(applet, "rc") == 0 || strcmp(applet, "openrc") == 0))
+	    applet && (strcmp(applet, "rc") == 0 || strcmp(applet, "uqis") == 0))
 	{
 		if (hook_out)
 			rc_plugin_run(hook_out, runlevel);
@@ -816,7 +814,7 @@ int main(int argc, char **argv)
 	}
 
 	if (strcmp(applet, "rc") == 0)
-		ewarn("rc is deprecated, please use openrc instead.");
+		ewarn("rc is deprecated, please use uqis instead.");
 	newlevel = argv[optind++];
 	/* To make life easier, we only have the shutdown runlevel as
 	 * nothing really needs to know that we're rebooting.
@@ -829,7 +827,7 @@ int main(int argc, char **argv)
 	}
 
 	/* Enable logging */
-	setenv("EINFO_LOG", "openrc", 1);
+	setenv("EINFO_LOG", "uqis", 1);
 
 	/* Export our PID */
 	xasprintf(&pidstr, "%d", getpid());

@@ -1,7 +1,7 @@
 if get_option('bash-completions')
 bash_completions = [
-  'openrc',
-  'openrc-service-script',
+  'uqis',
+  'uqis-service-script',
   'rc-service',
   'rc-status',
   'rc-update',

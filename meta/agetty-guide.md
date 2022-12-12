@@ -1,7 +1,7 @@
-Setting up the agetty service in OpenRC
-=================================xxxxxx
+Setting up the agetty service in UQIS
+=================================xxxx
 
-The agetty service is an OpenRC specific way to monitor and respawn a
+The agetty service is an UQIS specific way to monitor and respawn a
 getty, using agetty, on Linux. To use this method, make sure you aren't
 spawning a getty manager for this port some other way (such as through
 sysvinit/inittab), then run the following commands as root.

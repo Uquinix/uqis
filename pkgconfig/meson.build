@@ -12,7 +12,7 @@ pkgconfig_conf_data.set('VERSION', meson.project_version())
 
 pkgconfig_files = [
   'einfo.pc.in',
-  'openrc.pc.in',
+  'uqis.pc.in',
   ]
 
 foreach file : pkgconfig_files

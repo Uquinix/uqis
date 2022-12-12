@@ -5,12 +5,10 @@
 
 /*
  * Copyright (c) 2007-2015 The OpenRC Authors.
- * See the Authors file at the top-level directory of this distribution and
- * https://github.com/OpenRC/openrc/blob/HEAD/AUTHORS
  *
- * This file is part of OpenRC. It is subject to the license terms in
+ * This file is part of the UQIS project. It is subject to the license terms in
  * the LICENSE file found in the top-level directory of this
- * distribution and at https://github.com/OpenRC/openrc/blob/HEAD/LICENSE
+ * distribution and at https://github.com/Uquinix/uqis/blob/main/LICENSE
  * This file may not be copied, modified, propagated, or distributed
  *    except according to the terms contained in the LICENSE file.
  */
@@ -96,7 +94,7 @@ rc_find_pids(const char *exec, const char *const *argv, uid_t uid, pid_t pid)
 	pid_t p;
 	char *buffer = NULL;
 	struct stat sb;
-	pid_t openrc_pid = 0;
+	pid_t uqis_pid = 0;
 	char *pp;
 	RC_PIDLIST *pids = NULL;
 	RC_PID *pi;
@@ -105,7 +103,7 @@ rc_find_pids(const char *exec, const char *const *argv, uid_t uid, pid_t pid)
 		return NULL;
 
 	/*
-	  We never match RC_OPENRC_PID if present so we avoid the below
+	  We never match RC_UQIS_PID if present so we avoid the below
 	  scenario
 
 	  /etc/init.d/ntpd stop does
@@ -115,9 +113,9 @@ rc_find_pids(const char *exec, const char *const *argv, uid_t uid, pid_t pid)
 	  nasty
 	*/
 
-	if ((pp = getenv("RC_OPENRC_PID"))) {
-		if (sscanf(pp, "%d", &openrc_pid) != 1)
-			openrc_pid = 0;
+	if ((pp = getenv("RC_UQIS_PID"))) {
+		if (sscanf(pp, "%d", &uqis_pid) != 1)
+			uqis_pid = 0;
 	}
 
 	/*
@@ -151,7 +149,7 @@ rc_find_pids(const char *exec, const char *const *argv, uid_t uid, pid_t pid)
 	while ((entry = readdir(procdir)) != NULL) {
 		if (sscanf(entry->d_name, "%d", &p) != 1)
 			continue;
-		if (openrc_pid != 0 && openrc_pid == p)
+		if (uqis_pid != 0 && uqis_pid == p)
 			continue;
 		if (pid != 0 && pid != p)
 			continue;
