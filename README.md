@@ -3,8 +3,8 @@ UQIS
 
 UQIS is a dependency-based init system that hooks onto the
 system-provided init program on Enso, `/sbin/init`. UQIS is a fork of
-OpenRC, our changes made include the removal of support for other operating systems,
-many performance enhancements, security updates, and other under-the-hood fixes.
+OpenRC, our changes made include performance enhancements, security updates,
+and other under-the-hood fixes.
 
 For any enquires, please contact us at support@uquinix.com
 
