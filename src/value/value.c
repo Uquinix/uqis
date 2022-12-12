@@ -47,8 +47,7 @@ int main(int argc, char **argv)
 		eerrorx("%s: no option specified", applet);
 
 	if (strcmp(applet, "service_get_value") == 0 ||
-	    strcmp(applet, "get_options") == 0)
-	{
+	    strcmp(applet, "get_options") == 0) {
 		option = rc_service_value_get(service, argv[1]);
 		if (option) {
 			printf("%s", option);
@@ -56,7 +55,7 @@ int main(int argc, char **argv)
 			ok = true;
 		}
 	} else if (strcmp(applet, "service_set_value") == 0 ||
-	    strcmp(applet, "save_options") == 0)
+		   strcmp(applet, "save_options") == 0)
 		ok = rc_service_value_set(service, argv[1], argv[2]);
 	else
 		eerrorx("%s: unknown applet", applet);

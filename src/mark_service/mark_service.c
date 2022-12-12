@@ -69,7 +69,7 @@ int main(int argc, char **argv)
 		if (uqis_pid && sscanf(uqis_pid, "%d", &pid) == 1)
 			if (kill(pid, SIGHUP) != 0)
 				eerror("%s: failed to signal parent %d: %s",
-				    applet, pid, strerror(errno));
+				       applet, pid, strerror(errno));
 
 		/* Remove the exclusive time test. This ensures that it's not
 		   in control as well */

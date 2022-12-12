@@ -20,29 +20,23 @@
 #include "librc.h"
 #include "helpers.h"
 
-bool
-rc_yesno(const char *value)
+bool rc_yesno(const char *value)
 {
 	if (!value) {
 		errno = ENOENT;
 		return false;
 	}
 
-	if (strcasecmp(value, "yes") == 0 ||
-	    strcasecmp(value, "y") == 0 ||
-	    strcasecmp(value, "true") == 0 ||
-	    strcasecmp(value, "1") == 0)
+	if (strcasecmp(value, "yes") == 0 || strcasecmp(value, "y") == 0 ||
+	    strcasecmp(value, "true") == 0 || strcasecmp(value, "1") == 0)
 		return true;
 
-	if (strcasecmp(value, "no") != 0 &&
-	    strcasecmp(value, "n") != 0 &&
-	    strcasecmp(value, "false") != 0 &&
-	    strcasecmp(value, "0") != 0)
+	if (strcasecmp(value, "no") != 0 && strcasecmp(value, "n") != 0 &&
+	    strcasecmp(value, "false") != 0 && strcasecmp(value, "0") != 0)
 		errno = EINVAL;
 
 	return false;
 }
-
 
 /**
  * Read the entire @file into the buffer and set @len to the
@@ -50,8 +44,7 @@ rc_yesno(const char *value)
  * be strlen(buffer) + 1.
  * Don't forget to free the buffer afterwards!
  */
-bool
-rc_getfile(const char *file, char **buffer, size_t *len)
+bool rc_getfile(const char *file, char **buffer, size_t *len)
 {
 	bool ret = false;
 	FILE *fp;
@@ -80,7 +73,7 @@ rc_getfile(const char *file, char **buffer, size_t *len)
 	}
 	ret = true;
 
- finished:
+finished:
 	if (!ret) {
 		free(*buffer);
 		*len = 0;
@@ -90,8 +83,7 @@ rc_getfile(const char *file, char **buffer, size_t *len)
 	return ret;
 }
 
-ssize_t
-rc_getline(char **line, size_t *len, FILE *fp)
+ssize_t rc_getline(char **line, size_t *len, FILE *fp)
 {
 	char *p;
 	size_t last = 0;
@@ -114,8 +106,7 @@ rc_getline(char **line, size_t *len, FILE *fp)
 	return last;
 }
 
-char *
-rc_proc_getent(const char *ent _unused)
+char *rc_proc_getent(const char *ent _unused)
 {
 #ifdef __linux__
 	FILE *fp;
@@ -137,7 +128,9 @@ rc_proc_getent(const char *ent _unused)
 		len = strlen(ent);
 
 		while ((p = strsep(&proc, " "))) {
-			if (strncmp(ent, p, len) == 0 && (p[len] == '\0' || p[len] == ' ' || p[len] == '=')) {
+			if (strncmp(ent, p, len) == 0 &&
+			    (p[len] == '\0' || p[len] == ' ' ||
+			     p[len] == '=')) {
 				p += len;
 
 				if (*p == '=')
@@ -160,8 +153,7 @@ rc_proc_getent(const char *ent _unused)
 #endif
 }
 
-RC_STRINGLIST *
-rc_config_list(const char *file)
+RC_STRINGLIST *rc_config_list(const char *file)
 {
 	FILE *fp;
 	char *buffer = NULL;
@@ -241,7 +233,8 @@ static void rc_config_set_value(RC_STRINGLIST *config, char *value)
 	   any prior values we may already have */
 	TAILQ_FOREACH(cline, config, entries) {
 		i = strlen(entry);
-		if (strncmp(entry, cline->value, i) == 0 && cline->value[i] == '=') {
+		if (strncmp(entry, cline->value, i) == 0 &&
+		    cline->value[i] == '=') {
 			/* We have a match now - to save time we directly replace it */
 			free(cline->value);
 			cline->value = newline;
@@ -296,8 +289,9 @@ static RC_STRINGLIST *rc_config_kcl(RC_STRINGLIST *config)
 		 * duplicates
 		 */
 		TAILQ_FOREACH_SAFE(cline, config, entries, config_np) {
-			if (strncmp(override->value, cline->value, varlen) == 0
-				&& cline->value[varlen] == '=') {
+			if (strncmp(override->value, cline->value, varlen) ==
+				    0 &&
+			    cline->value[varlen] == '=') {
 				rc_stringlist_delete(config, cline->value);
 				break;
 			}
@@ -315,7 +309,7 @@ static RC_STRINGLIST *rc_config_kcl(RC_STRINGLIST *config)
 	return config;
 }
 
-static RC_STRINGLIST * rc_config_directory(RC_STRINGLIST *config)
+static RC_STRINGLIST *rc_config_directory(RC_STRINGLIST *config)
 {
 	DIR *dp;
 	struct dirent *d;
@@ -342,7 +336,8 @@ static RC_STRINGLIST * rc_config_directory(RC_STRINGLIST *config)
 				rc_conf_d_list = rc_config_list(path);
 				TAILQ_FOREACH(line, rc_conf_d_list, entries)
 					if (line->value)
-						rc_config_set_value(config, line->value);
+						rc_config_set_value(
+							config, line->value);
 				rc_stringlist_free(rc_conf_d_list);
 			}
 			rc_stringlist_free(rc_conf_d_files);
@@ -351,8 +346,7 @@ static RC_STRINGLIST * rc_config_directory(RC_STRINGLIST *config)
 	return config;
 }
 
-RC_STRINGLIST *
-rc_config_load(const char *file)
+RC_STRINGLIST *rc_config_load(const char *file)
 {
 	RC_STRINGLIST *list;
 	RC_STRINGLIST *config;
@@ -368,8 +362,7 @@ rc_config_load(const char *file)
 	return config;
 }
 
-char *
-rc_config_value(RC_STRINGLIST *list, const char *entry)
+char *rc_config_value(RC_STRINGLIST *list, const char *entry)
 {
 	RC_STRING *line;
 	char *p;
@@ -379,7 +372,8 @@ rc_config_value(RC_STRINGLIST *list, const char *entry)
 	TAILQ_FOREACH(line, list, entries) {
 		p = strchr(line->value, '=');
 		if (p != NULL) {
-			if (strncmp(entry, line->value, len) == 0 && line->value[len] == '=')
+			if (strncmp(entry, line->value, len) == 0 &&
+			    line->value[len] == '=')
 				return ++p;
 		}
 	}
@@ -390,14 +384,12 @@ rc_config_value(RC_STRINGLIST *list, const char *entry)
  * each rc_conf_value call */
 static RC_STRINGLIST *rc_conf = NULL;
 
-static void
-_free_rc_conf(void)
+static void _free_rc_conf(void)
 {
 	rc_stringlist_free(rc_conf);
 }
 
-char *
-rc_conf_value(const char *setting)
+char *rc_conf_value(const char *setting)
 {
 	RC_STRINGLIST *old;
 	RC_STRING *s;

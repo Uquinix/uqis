@@ -36,7 +36,7 @@
 #include "helpers.h"
 
 #ifndef _PATH_DEV
-# define _PATH_DEV	"/dev/"
+#define _PATH_DEV "/dev/"
 #endif
 
 static sigjmp_buf jbuf;
@@ -45,22 +45,22 @@ static sigjmp_buf jbuf;
  *	Alarm handler
  */
 /*ARGSUSED*/
-# ifdef __GNUC__
+#ifdef __GNUC__
 static void handler(int arg __attribute__((unused)))
-# else
+#else
 static void handler(int arg)
-# endif
+#endif
 {
 	siglongjmp(jbuf, 1);
 }
 
 static void getuidtty(char **userp, char **ttyp)
 {
-	struct passwd 		*pwd;
-	uid_t			uid;
-	char			*tty;
-	static char		uidbuf[32];
-	char		*ttynm = NULL;
+	struct passwd *pwd;
+	uid_t uid;
+	char *tty;
+	static char uidbuf[32];
+	char *ttynm = NULL;
 
 	uid = getuid();
 	if ((pwd = getpwuid(uid)) != NULL) {
@@ -68,7 +68,7 @@ static void getuidtty(char **userp, char **ttyp)
 		strncat(uidbuf, pwd->pw_name, sizeof(uidbuf) - 1);
 	} else {
 		if (uid)
-			sprintf(uidbuf, "uid %d", (int) uid);
+			sprintf(uidbuf, "uid %d", (int)uid);
 		else
 			sprintf(uidbuf, "root");
 	}
@@ -84,7 +84,7 @@ static void getuidtty(char **userp, char **ttyp)
 	}
 
 	*userp = uidbuf;
-	*ttyp  = ttynm;
+	*ttyp = ttynm;
 }
 
 /*
@@ -92,8 +92,8 @@ static void getuidtty(char **userp, char **ttyp)
  */
 static int file_isatty(const char *fname)
 {
-	struct stat		st;
-	int			major;
+	struct stat st;
+	int major;
 
 	if (stat(fname, &st) < 0)
 		return 0;
@@ -127,11 +127,11 @@ void broadcast(char *text)
 	char *user;
 	struct utsname name;
 	time_t t;
-	char	*date;
+	char *date;
 	char *p;
 	char *line = NULL;
 	struct sigaction sa;
-	int	flags;
+	int flags;
 	char *term = NULL;
 	struct utmpx *utmp;
 	/*
@@ -157,7 +157,7 @@ void broadcast(char *text)
 		*p = 0;
 
 	xasprintf(&line, "\007\r\nBroadcast message from %s@%s %s(%s):\r\n\r\n",
-			user, name.nodename, tty, date);
+		  user, name.nodename, tty, date);
 	free(tty);
 
 	/*
@@ -190,9 +190,11 @@ void broadcast(char *text)
 		 */
 		if (sigsetjmp(jbuf, 1) == 0) {
 			alarm(2);
-			flags = O_WRONLY|O_NDELAY|O_NOCTTY;
-			if (file_isatty(term) && (fd = open(term, flags)) >= 0) {
-				if (isatty(fd) && (tp = fdopen(fd, "w")) != NULL) {
+			flags = O_WRONLY | O_NDELAY | O_NOCTTY;
+			if (file_isatty(term) &&
+			    (fd = open(term, flags)) >= 0) {
+				if (isatty(fd) &&
+				    (tp = fdopen(fd, "w")) != NULL) {
 					fputs(line, tp);
 					fputs(text, tp);
 					fflush(tp);

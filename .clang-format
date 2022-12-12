@@ -1,4 +1,3 @@
-# .clang-format
 ---
 AlignAfterOpenBracket: Align
 AlignConsecutiveAssignments: false
@@ -107,4 +106,3 @@ SpacesInParentheses: false
 SpacesInSquareBrackets: false
 TabWidth: 8
 UseTab: Always
-...

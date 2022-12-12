@@ -37,8 +37,7 @@
 
 bool rc_in_plugin = false;
 
-typedef struct plugin
-{
+typedef struct plugin {
 	char *name;
 	void *handle;
 	int (*hook)(RC_HOOK, const char *);
@@ -47,8 +46,7 @@ typedef struct plugin
 TAILQ_HEAD(, plugin) plugins;
 
 #ifndef __FreeBSD__
-dlfunc_t
-dlfunc(void * __restrict handle, const char * __restrict symbol)
+dlfunc_t dlfunc(void *__restrict handle, const char *__restrict symbol)
 {
 	union {
 		void *d;
@@ -60,8 +58,7 @@ dlfunc(void * __restrict handle, const char * __restrict symbol)
 }
 #endif
 
-void
-rc_plugin_load(void)
+void rc_plugin_load(void)
 {
 	DIR *dp;
 	struct dirent *d;
@@ -83,7 +80,7 @@ rc_plugin_load(void)
 		if (d->d_name[0] == '.')
 			continue;
 
-		xasprintf(&file, RC_PLUGINDIR "/%s",  d->d_name);
+		xasprintf(&file, RC_PLUGINDIR "/%s", d->d_name);
 		h = dlopen(file, RTLD_LAZY);
 		free(file);
 		if (h == NULL) {
@@ -91,11 +88,11 @@ rc_plugin_load(void)
 			continue;
 		}
 
-		fptr = (int (*)(RC_HOOK, const char *))
-		    dlfunc(h, RC_PLUGIN_HOOK);
+		fptr = (int (*)(RC_HOOK, const char *))dlfunc(h,
+							      RC_PLUGIN_HOOK);
 		if (fptr == NULL) {
-			eerror("%s: cannot find symbol `%s'",
-			    d->d_name, RC_PLUGIN_HOOK);
+			eerror("%s: cannot find symbol `%s'", d->d_name,
+			       RC_PLUGIN_HOOK);
 			dlclose(h);
 		} else {
 			plugin = xmalloc(sizeof(*plugin));
@@ -108,8 +105,7 @@ rc_plugin_load(void)
 	closedir(dp);
 }
 
-int
-rc_waitpid(pid_t pid)
+int rc_waitpid(pid_t pid)
 {
 	int status;
 
@@ -122,8 +118,7 @@ rc_waitpid(pid_t pid)
 	return status;
 }
 
-void
-rc_plugin_run(RC_HOOK hook, const char *value)
+void rc_plugin_run(RC_HOOK hook, const char *value)
 {
 	PLUGIN *plugin;
 	struct sigaction sa;
@@ -163,8 +158,8 @@ rc_plugin_run(RC_HOOK hook, const char *value)
 		 * This is actually quite important as without this, the splash
 		 * plugin will probably hang when running in silent mode. */
 		for (i = 0; i < 2; i++)
-			if ((flags = fcntl (pfd[i], F_GETFD, 0)) < 0 ||
-			    fcntl (pfd[i], F_SETFD, flags | FD_CLOEXEC) < 0)
+			if ((flags = fcntl(pfd[i], F_GETFD, 0)) < 0 ||
+			    fcntl(pfd[i], F_SETFD, flags | FD_CLOEXEC) < 0)
 				eerror("fcntl: %s", strerror(errno));
 
 		sigprocmask(SIG_SETMASK, &full, &old);
@@ -179,8 +174,8 @@ rc_plugin_run(RC_HOOK hook, const char *value)
 		if (pid == 0) {
 			/* Restore default handlers */
 			sigaction(SIGCHLD, &sa, NULL);
-			sigaction(SIGHUP,  &sa, NULL);
-			sigaction(SIGINT,  &sa, NULL);
+			sigaction(SIGHUP, &sa, NULL);
+			sigaction(SIGINT, &sa, NULL);
 			sigaction(SIGQUIT, &sa, NULL);
 			sigaction(SIGTERM, &sa, NULL);
 			sigaction(SIGUSR1, &sa, NULL);
@@ -226,8 +221,7 @@ rc_plugin_run(RC_HOOK hook, const char *value)
 	}
 }
 
-void
-rc_plugin_unload(void)
+void rc_plugin_unload(void)
 {
 	PLUGIN *plugin = TAILQ_FIRST(&plugins);
 	PLUGIN *next;

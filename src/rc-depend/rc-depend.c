@@ -39,16 +39,11 @@ const char *applet = NULL;
 const char *extraopts = NULL;
 const char getoptstring[] = "aot:suTF:" getoptstring_COMMON;
 const struct option longopts[] = {
-	{ "starting", 0, NULL, 'a'},
-	{ "stopping", 0, NULL, 'o'},
-	{ "type",     1, NULL, 't'},
-	{ "notrace",  0, NULL, 'T'},
-	{ "strict",   0, NULL, 's'},
-	{ "update",   0, NULL, 'u'},
-	{ "deptree-file", 1, NULL, 'F'},
-	longopts_COMMON
-};
-const char * const longopts_help[] = {
+	{"starting", 0, NULL, 'a'},	{"stopping", 0, NULL, 'o'},
+	{"type", 1, NULL, 't'},		{"notrace", 0, NULL, 'T'},
+	{"strict", 0, NULL, 's'},	{"update", 0, NULL, 'u'},
+	{"deptree-file", 1, NULL, 'F'}, longopts_COMMON};
+const char *const longopts_help[] = {
 	"Order services as if runlevel is starting",
 	"Order services as if runlevel is stopping",
 	"Type(s) of dependency to list",
@@ -56,8 +51,7 @@ const char * const longopts_help[] = {
 	"Only use what is in the runlevels",
 	"Force an update of the dependency tree",
 	"File to load cached deptree from",
-	longopts_help_COMMON
-};
+	longopts_help_COMMON};
 const char *usagestring = NULL;
 
 int main(int argc, char **argv)
@@ -77,9 +71,8 @@ int main(int argc, char **argv)
 
 	applet = basename_c(argv[0]);
 	types = rc_stringlist_new();
-	while ((opt = getopt_long(argc, argv, getoptstring,
-		    longopts, (int *) 0)) != -1)
-	{
+	while ((opt = getopt_long(argc, argv, getoptstring, longopts,
+				  (int *)0)) != -1) {
 		switch (opt) {
 		case 'a':
 			options |= RC_DEP_START;
@@ -104,7 +97,7 @@ int main(int argc, char **argv)
 			deptree_file = xstrdup(optarg);
 			break;
 
-		case_RC_COMMON_GETOPT
+			case_RC_COMMON_GETOPT
 		}
 	}
 
@@ -127,7 +120,7 @@ int main(int argc, char **argv)
 		depends = rc_deptree_depends(deptree, NULL, list, runlevel, 0);
 		if (!depends && errno == ENOENT)
 			eerror("no dependency info for service `%s'",
-			    argv[optind]);
+			       argv[optind]);
 		else
 			rc_stringlist_add(services, argv[optind]);
 
@@ -151,19 +144,18 @@ int main(int argc, char **argv)
 		rc_stringlist_add(types, "iuse");
 	}
 
-	depends = rc_deptree_depends(deptree, types, services,
-	    runlevel, options);
+	depends =
+		rc_deptree_depends(deptree, types, services, runlevel, options);
 
 	if (TAILQ_FIRST(depends)) {
 		TAILQ_FOREACH(s, depends, entries) {
 			if (first)
 				first = false;
 			else
-				printf (" ");
-			printf ("%s", s->value);
-
+				printf(" ");
+			printf("%s", s->value);
 		}
-		printf ("\n");
+		printf("\n");
 	}
 
 	rc_stringlist_free(types);

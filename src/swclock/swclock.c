@@ -32,21 +32,17 @@
 #include "misc.h"
 #include "_usage.h"
 
-#define RC_SHUTDOWNTIME    RC_SVCDIR "/shutdowntime"
+#define RC_SHUTDOWNTIME RC_SVCDIR "/shutdowntime"
 
 const char *applet = NULL;
 const char *extraopts = "file";
 const char getoptstring[] = "sw" getoptstring_COMMON;
-const struct option longopts[] = {
-	{ "save", 0, NULL, 's' },
-	{ "warn", 0, NULL, 'w' },
-	longopts_COMMON
-};
-const char * const longopts_help[] = {
-	"saves the time",
-	"no error if no reference file",
-	longopts_help_COMMON
-};
+const struct option longopts[] = {{"save", 0, NULL, 's'},
+				  {"warn", 0, NULL, 'w'},
+				  longopts_COMMON};
+const char *const longopts_help[] = {"saves the time",
+				     "no error if no reference file",
+				     longopts_help_COMMON};
 const char *usagestring = NULL;
 
 int main(int argc, char **argv)
@@ -57,9 +53,8 @@ int main(int argc, char **argv)
 	struct timeval tv;
 
 	applet = basename_c(argv[0]);
-	while ((opt = getopt_long(argc, argv, getoptstring,
-		    longopts, (int *) 0)) != -1)
-	{
+	while ((opt = getopt_long(argc, argv, getoptstring, longopts,
+				  (int *)0)) != -1) {
 		switch (opt) {
 		case 's':
 			sflag = 1;
@@ -67,7 +62,7 @@ int main(int argc, char **argv)
 		case 'w':
 			wflag = 1;
 			break;
-		case_RC_COMMON_GETOPT
+			case_RC_COMMON_GETOPT
 		}
 	}
 
@@ -80,9 +75,8 @@ int main(int argc, char **argv)
 			if (opt == -1)
 				eerrorx("swclock: open: %s", strerror(errno));
 			close(opt);
-		} else
-			if (utime(file, NULL) == -1)
-				eerrorx("swclock: utime: %s", strerror(errno));
+		} else if (utime(file, NULL) == -1)
+			eerrorx("swclock: utime: %s", strerror(errno));
 		return 0;
 	}
 

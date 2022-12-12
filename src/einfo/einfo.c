@@ -29,7 +29,7 @@
 #include "helpers.h"
 
 /* usecs to wait while we poll the file existence  */
-#define WAIT_INTERVAL	20000000
+#define WAIT_INTERVAL 20000000
 
 const char *applet = NULL;
 
@@ -57,8 +57,8 @@ int main(int argc, char **argv)
 	int level = 0;
 	struct timespec ts;
 	struct timeval stop, now;
-	int (*e) (const char *, ...) EINFO_PRINTF(1, 2) = NULL;
-	int (*ee) (int, const char *, ...) EINFO_PRINTF(2, 3) = NULL;
+	int (*e)(const char *, ...) EINFO_PRINTF(1, 2) = NULL;
+	int (*ee)(int, const char *, ...) EINFO_PRINTF(2, 3) = NULL;
 
 	applet = basename_c(argv[0]);
 	argc--;
@@ -66,12 +66,9 @@ int main(int argc, char **argv)
 
 	if (strcmp(applet, "eval_ecolors") == 0) {
 		printf("GOOD='%s'\nWARN='%s'\nBAD='%s'\nHILITE='%s'\nBRACKET='%s'\nNORMAL='%s'\n",
-		    ecolor(ECOLOR_GOOD),
-		    ecolor(ECOLOR_WARN),
-		    ecolor(ECOLOR_BAD),
-		    ecolor(ECOLOR_HILITE),
-		    ecolor(ECOLOR_BRACKET),
-		    ecolor(ECOLOR_NORMAL));
+		       ecolor(ECOLOR_GOOD), ecolor(ECOLOR_WARN),
+		       ecolor(ECOLOR_BAD), ecolor(ECOLOR_HILITE),
+		       ecolor(ECOLOR_BRACKET), ecolor(ECOLOR_NORMAL));
 		exit(EXIT_SUCCESS);
 	}
 
@@ -80,8 +77,7 @@ int main(int argc, char **argv)
 		    strcmp(applet, "ewend") == 0 ||
 		    strcmp(applet, "veend") == 0 ||
 		    strcmp(applet, "vweend") == 0 ||
-		    strcmp(applet, "ewaitfile") == 0)
-		{
+		    strcmp(applet, "ewaitfile") == 0) {
 			errno = 0;
 			retval = (int)strtoimax(argv[0], &p, 0);
 			if (!p || *p != '\0')
@@ -93,11 +89,12 @@ int main(int argc, char **argv)
 				argv++;
 			}
 		} else if (strcmp(applet, "esyslog") == 0 ||
-		    strcmp(applet, "elog") == 0) {
+			   strcmp(applet, "elog") == 0) {
 			p = strchr(argv[0], '.');
 			if (!p ||
 			    (level = syslog_decode(p + 1, prioritynames)) == -1)
-				eerrorx("%s: invalid log level `%s'", applet, argv[0]);
+				eerrorx("%s: invalid log level `%s'", applet,
+					argv[0]);
 
 			if (argc < 3)
 				eerrorx("%s: not enough arguments", applet);
@@ -133,8 +130,8 @@ int main(int argc, char **argv)
 					continue;
 				if (timercmp(&now, &stop, <))
 					continue;
-				eendv(EXIT_FAILURE,
-				    "timed out waiting for %s", argv[i]);
+				eendv(EXIT_FAILURE, "timed out waiting for %s",
+				      argv[i]);
 				return EXIT_FAILURE;
 			}
 			eendv(EXIT_SUCCESS, NULL);

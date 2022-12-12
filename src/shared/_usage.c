@@ -17,25 +17,25 @@
 #include "version.h"
 
 #if lint
-#  define _noreturn
+#define _noreturn
 #endif
 #if __GNUC__ > 2 || defined(__INTEL_COMPILER)
-#  define _noreturn __attribute__ ((__noreturn__))
+#define _noreturn __attribute__((__noreturn__))
 #else
-#  define _noreturn
+#define _noreturn
 #endif
 
 void set_quiet_options(void)
 {
 	static int qcount = 0;
 
-	qcount ++;
+	qcount++;
 	switch (qcount) {
 	case 1:
-		setenv ("EINFO_QUIET", "YES", 1);
+		setenv("EINFO_QUIET", "YES", 1);
 		break;
 	case 2:
-		setenv ("EERROR_QUIET", "YES", 1);
+		setenv("EERROR_QUIET", "YES", 1);
 		break;
 	}
 }
@@ -57,7 +57,7 @@ _noreturn void show_version(void)
 
 _noreturn void usage(int exit_status)
 {
-	const char * const has_arg[] = { "", "<arg>", "[arg]" };
+	const char *const has_arg[] = {"", "<arg>", "[arg]"};
 	int i;
 	int len;
 	char *lo;
@@ -76,8 +76,9 @@ _noreturn void usage(int exit_status)
 	printf("\n\nOptions: [ %s ]\n", getoptstring);
 	for (i = 0; longopts[i].name; ++i) {
 		val[1] = longopts[i].val;
-		len = printf("  %3s --%s %s", isprint(longopts[i].val) ? val : "",
-		    longopts[i].name, has_arg[longopts[i].has_arg]);
+		len = printf("  %3s --%s %s",
+			     isprint(longopts[i].val) ? val : "",
+			     longopts[i].name, has_arg[longopts[i].has_arg]);
 
 		lo = p = xstrdup(longopts_help[i]);
 		while ((token = strsep(&p, "\n"))) {
