@@ -29,8 +29,7 @@ Source Tree
 Licensing
 ---------
 
-Features that can be ported back across to OpenRC will be licensed under BSD.
-Enso specific features & optimisations will be licensed under UPSL.
+See [license.txt](license.txt)
 
 Reporting Bugs
 --------------
