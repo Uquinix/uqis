@@ -1,0 +1,9 @@
+All code in this project written by Uquinix, and Uquinix Entities is provided under:
+
+	UPSL (Uquinix Public Source License), found at meta/licenses/UPSL.txt
+
+In addition, all original code provided by the OpenRC Authors, Original Maintainers & Authors, and its contributers is provided under:
+
+	BSD 2-Clause "Simplified" License, found at meta/licenses/BSD-2-Clause-Simplified-License.txt
+
+All contributions to UQIS are subject to this LICENSE file.
