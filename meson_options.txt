@@ -3,7 +3,7 @@ option('audit', type : 'feature', value : 'auto',
 option('bash-completions', type : 'boolean',
   description : 'install bash completions')
 option('branding', type : 'string',
-  description : 'Add branding to OpenRC')
+  description : 'Add branding to UQIS')
 option('local_prefix', type : 'string', value : '/usr/local',
   description : 'default location of user maintained packages')
 option('newnet', type : 'boolean',

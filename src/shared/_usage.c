@@ -46,7 +46,7 @@ _noreturn void show_version(void)
 {
 	const char *systype = NULL;
 
-	printf("%s (OpenRC", applet);
+	printf("%s (UQIS", applet);
 	if ((systype = rc_sys()))
 		printf(" [%s]", systype);
 	printf(") %s", VERSION);
