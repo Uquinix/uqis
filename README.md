@@ -8,6 +8,10 @@ and other under-the-hood fixes.
 
 For any enquires, please contact us at support@uquinix.com
 
+And for security-related enquiries, please encrypt your email using our GPG key and contact security@uquinix.com.
+
+This repository is mirrored from git.uquinix.com, this repository serves to allow users to create pull-requets and issues.
+
 Source Tree
 -----------
 
